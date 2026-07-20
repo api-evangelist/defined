@@ -1,0 +1,48 @@
+generated: '2026-07-18'
+method: searched
+source: >-
+  https://docs.codex.io/concepts/authentication.md and
+  https://docs.codex.io/llms.txt — Codex is a GraphQL API (no OpenAPI
+  securitySchemes), so this profile is captured from the published auth docs.
+description: >-
+  How clients authenticate to Defined's Codex GraphQL API
+  (https://graph.codex.io/graphql). Three mechanisms: long-lived secret API keys,
+  short-lived JWTs minted server-side for untrusted clients, and keyless
+  pay-per-request access for agents via the Machine Payments Protocol.
+summary:
+  types:
+  - apiKey
+  - http
+schemes:
+- name: secretApiKey
+  type: apiKey
+  in: header
+  header: Authorization
+  format: "Authorization: <API_KEY>"
+  bearer_prefix: false
+  description: >-
+    Long-lived secret API key obtained from the Codex dashboard, passed in the
+    Authorization header with NO Bearer prefix. Used for server-side requests.
+  docs: https://docs.codex.io/get-started.md
+- name: shortLivedJwt
+  type: http
+  scheme: bearer
+  format: "Authorization: Bearer <token>"
+  bearer_prefix: true
+  description: >-
+    Short-lived JWT minted by the createApiTokens mutation for untrusted contexts
+    (browsers, user-facing apps). Supports configurable requestLimit and
+    expiresIn windows. Cannot be used for API-token management operations.
+    Invalid/expired tokens return HTTP 401.
+  docs: https://docs.codex.io/concepts/authentication.md
+- name: machinePaymentsProtocol
+  type: http
+  scheme: http-402
+  description: >-
+    Keyless, pay-per-request access for AI agents over HTTP 402 via the Machine
+    Payments Protocol (MPP) — no API key required.
+  docs: https://docs.codex.io/agents/mpp.md
+notes: >-
+  There is no OAuth 2.0 / OIDC authorization-code flow and no per-scope
+  permission model documented; access is gated by API key + plan (see
+  lifecycle/defined-lifecycle.yml and Pricing).
