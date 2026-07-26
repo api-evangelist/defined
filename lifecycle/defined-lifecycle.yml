@@ -1,0 +1,51 @@
+generated: '2026-07-18'
+method: searched
+source: >-
+  https://docs.codex.io/changelog.md, https://docs.codex.io/llms.txt,
+  https://status.codex.io/, https://www.codex.io/pricing — versioning,
+  deprecation practice, status page and plan/SLA signals for Defined's Codex API.
+versioning:
+  scheme: continuous single-schema (additive-first GraphQL)
+  mechanism: >-
+    No pinned API version header. New fields, types, queries and network support
+    ship continuously and are announced in the dated changelog.
+  changelog: https://docs.codex.io/changelog
+  rss: https://docs.codex.io/changelog/rss.xml
+deprecation:
+  policy: field/type deprecation announced in changelog with a stated removal date
+  sunset_header: false
+  detail: >-
+    Codex deprecates individual GraphQL fields/enums and pre-announces a hard
+    removal date rather than using RFC 8594 Sunset/Deprecation HTTP headers.
+  examples:
+    - field: statsYear1 (wallet stats)
+      removal_date: '2026-07-10'
+      superseded_by: statsYear
+    - field: uniqueTokens1y (wallet stats)
+      removal_date: '2026-07-10'
+    - field: PAYOUT_REDEMPTION (PredictionTradeEventType)
+      superseded_by: POSITION_REDEEMED
+      removal_date: future (TBA)
+  changelog: https://docs.codex.io/changelog
+status_page: https://status.codex.io/
+sla:
+  url: https://www.codex.io/pricing
+  public_uptime_target: null
+  notes: >-
+    No public numeric uptime SLA; custom SLAs are offered on the Enterprise plan.
+    Priority support on Growth; dedicated support on Enterprise.
+plans:
+  - name: Free
+    price: "$0"
+    requests: 10,000 / month
+    rate_limit: 5 req/s
+  - name: Growth
+    price: "$350 / month"
+    requests: 1,000,000 / month (scalable to 10M; $350 per additional 1M)
+    rate_limit: 300 req/s
+    includes: [websockets, webhooks, priority support]
+  - name: Enterprise
+    price: custom per million requests
+    requests: unlimited
+    includes: [custom SLAs, dedicated support, high concurrency, custom packaging]
+pricing: https://www.codex.io/pricing

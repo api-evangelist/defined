@@ -1,0 +1,15 @@
+generated: '2026-07-18'
+method: searched
+source: https://docs.codex.io/agents/codex-skills.md
+description: >-
+  Defined/Codex publishes its OWN Agent Skill for coding agents — captured here
+  by reference rather than generated, since Codex is a GraphQL API (no OpenAPI
+  operationIds to ground a synthesized skill in). The skill is installed from the
+  Codex-Data/skills GitHub repo via the `skills` CLI.
+skills:
+  - file: defined-codex-skill.md
+    name: Codex API (blockchain data) skill
+    api: defined:codex-graphql-api
+    published: true
+    source_repo: https://github.com/Codex-Data/skills
+    install: npx skills add Codex-Data/skills -g --yes

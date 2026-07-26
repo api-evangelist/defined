@@ -1,0 +1,50 @@
+generated: '2026-07-18'
+method: searched
+type: Webhooks
+source: >-
+  https://docs.codex.io/llms.txt, https://docs.codex.io/build.md,
+  https://www.codex.io/pricing — Codex exposes a real-time event surface as
+  GraphQL subscriptions (graphql-ws WebSocket) plus HTTP webhooks. No published
+  AsyncAPI document exists, so this captures the event catalog rather than a
+  verbatim spec. NEVER fabricated — subscription names taken from the docs.
+description: >-
+  Defined's Codex API real-time event surface. Streaming is delivered two ways:
+  GraphQL subscriptions over a graphql-ws WebSocket at wss://graph.codex.io/graphql
+  (all plans), and HTTP webhooks (Growth plan and above). Commitment levels
+  (Preprocessed / Processed / Confirmed, plus Base Flashblocks) let consumers
+  trade latency for finality.
+websocket:
+  url: wss://graph.codex.io/graphql
+  protocol: graphql-ws
+webhooks:
+  available: true
+  plan: Growth and above
+  docs: https://docs.codex.io/build.md
+commitment_levels:
+  - Preprocessed
+  - Processed
+  - Confirmed
+  - Base Flashblocks (pre-confirmation, Processed level)
+subscriptions:
+  - name: onBarsUpdated
+    description: Streams OHLCV bar updates for a pair.
+  - name: onTokenBarsUpdated
+    description: Streams OHLCV bar updates for a token.
+  - name: onEventsCreated
+    description: Streams new on-chain trade/liquidity events for a pair.
+  - name: onTokenEventsCreated
+    description: Streams new events for a token.
+  - name: onEventsCreatedByMaker
+    description: Streams new events filtered by maker wallet.
+  - name: onFilterTokensUpdated
+    description: >-
+      Streams updates to a filterTokens result set, including full results for
+      newly matching tokens and removedTokenIds that no longer match.
+  - name: onLaunchpadTokenEvent
+    description: Streams launchpad token lifecycle events in real time.
+  - name: onLaunchpadTokenEventBatch
+    description: Batched launchpad token events.
+notes: >-
+  Subscription field names are captured from the Codex changelog/docs; consult
+  https://docs.codex.io/api-reference/subscriptions/ for the authoritative and
+  complete list plus argument/type definitions.

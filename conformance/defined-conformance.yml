@@ -1,0 +1,44 @@
+generated: '2026-07-18'
+method: searched
+source: >-
+  Derived from the Codex API documentation (https://docs.codex.io/llms.txt,
+  /concepts/authentication.md, /build.md, /agents/mpp.md) and observed transport
+  behavior. Codex is a GraphQL API, so REST/OpenAPI-oriented standards are marked
+  not-applicable rather than failing.
+standards:
+  - id: graphql
+    conforms: true
+    evidence: >-
+      Single GraphQL endpoint at https://graph.codex.io/graphql with queries,
+      mutations and graphql-ws subscriptions; first-party generated TypeScript
+      SDK (@codex-data/sdk).
+  - id: graphql-ws
+    conforms: true
+    evidence: >-
+      Real-time subscriptions stream over the graphql-ws WebSocket protocol at
+      wss://graph.codex.io/graphql.
+  - id: api-key-auth
+    conforms: true
+    evidence: "Authorization: <API_KEY> header (no Bearer prefix) for secret keys."
+  - id: jwt-bearer
+    conforms: true
+    evidence: >-
+      Short-lived JWTs minted by createApiTokens use Authorization: Bearer <token>.
+  - id: http-402-payments
+    conforms: true
+    evidence: >-
+      Keyless pay-per-request access for agents via the Machine Payments Protocol
+      over HTTP 402 (/agents/mpp.md).
+  - id: oauth2
+    conforms: false
+    evidence: No OAuth 2.0 authorization-code flow; access is API-key / JWT / MPP.
+  - id: oidc
+    conforms: false
+    evidence: No OpenID Connect discovery documented.
+  - id: rfc9457
+    conforms: false
+    evidence: >-
+      Errors use the GraphQL errors[] array, not application/problem+json.
+  - id: rest
+    conforms: false
+    evidence: The API is GraphQL, not REST/OpenAPI.

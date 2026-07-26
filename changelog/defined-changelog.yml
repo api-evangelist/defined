@@ -1,0 +1,48 @@
+generated: '2026-07-18'
+method: searched
+source: https://docs.codex.io/changelog.md
+description: >-
+  Structured capture of the dated changelog for Defined's Codex GraphQL API.
+  Codex evolves a single GraphQL schema continuously; weekly dated updates add
+  fields, types, queries and network support, and pre-announce breaking removals
+  with a removal date. The live changelog (and its RSS feed) is the source of
+  truth; recent entries only.
+docs: https://docs.codex.io/changelog
+rss: https://docs.codex.io/changelog/rss.xml
+versioning:
+  scheme: continuous single-schema, additive-first
+  detail: lifecycle/defined-lifecycle.yml
+entries:
+  - date: '2026-07-13'
+    latest: true
+    additions:
+      - Token categories (CANONICAL / NARRATIVE) via new Category type, categories/category/categoryTokens queries
+      - filterNetworks query returning network-level liquidity/volume/txn stats across time windows
+      - POSITION_REDEEMED prediction trade event type
+    deprecations:
+      - PAYOUT_REDEMPTION prediction trade event type (replaced by POSITION_REDEEMED)
+    highlights:
+      - Filter tokens by category via TokenFilters.categories (anyOf/allOf/noneOf/hasCategory)
+      - Average hold period semantics clarified on wallet/token/trader stats
+  - date: '2026-07-06'
+    additions:
+      - Robinhood Chain (chain ID 4663) supported across Codex APIs
+      - removedTokenIds on onFilterTokensUpdated for client-side result-set sync
+      - actualSharesHeld on prediction trader stats
+  - date: '2026-06-29'
+    additions:
+      - Token-2022 scaled UI amounts (Balance.uiBalance, BalancesInput.uiAmountMode)
+      - Token extension metadata and ERC-7572 contractURI on EnhancedToken
+      - Price.priceChange24 (24h percent change)
+      - Filter/rank wallets by behavior category (WalletFilters.categories)
+      - Base Flashblocks for bar subscriptions (Processed commitment level)
+      - EasyA Kickstart launchpad supported
+  - date: '2026-06-22'
+    additions:
+      - Base Flashblocks for event streams (Processed EventCommitmentLevel)
+      - Balance.tokenLastTradedTimestamp and resolved wallet identity on balances
+      - Preprocessed commitment level for Solana bar subscriptions
+      - New 1-year wallet stats window (DetailedWalletStats.statsYear)
+    deprecations:
+      - statsYear1 wallet stats window (removal 2026-07-10; migrate to statsYear)
+      - uniqueTokens1y 1-year unique-tokens metric (removal 2026-07-10)

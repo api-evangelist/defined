@@ -1,0 +1,24 @@
+generated: '2026-07-18'
+method: searched
+source: https://docs.codex.io/sdk.md
+description: >-
+  First-party client library for Defined's Codex GraphQL API. Verified against
+  the public npm registry (https://registry.npmjs.org/@codex-data/sdk). Codex
+  documents a single official SDK for TypeScript/JavaScript; it advises calling
+  the GraphQL API directly for all other languages since the wire format is
+  identical. Registry HTTP status recorded at fetch time.
+packages:
+  - language: typescript
+    registry: npm
+    name: "@codex-data/sdk"
+    url: https://www.npmjs.com/package/@codex-data/sdk
+    source: https://github.com/Codex-Data/sdk
+    install: npm install @codex-data/sdk
+    version: 2.3.18
+    license: MIT
+    official: true
+    registry_status: 200
+    note: >-
+      Official Codex TypeScript/JavaScript SDK. Ships generated types and helpers
+      for queries, mutations and WebSocket subscriptions against
+      https://graph.codex.io/graphql.

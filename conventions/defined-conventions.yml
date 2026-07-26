@@ -1,0 +1,82 @@
+generated: '2026-07-18'
+method: searched
+source: >-
+  https://docs.codex.io/llms.txt, https://docs.codex.io/learn-graphql.md,
+  https://docs.codex.io/build.md — cross-cutting request/response conventions
+  that apply across the whole Codex GraphQL API rather than any single operation.
+description: >-
+  How Defined's Codex GraphQL API behaves across operations: transport, auth
+  style, the required networkId dimension, batching, subscriptions/webhooks,
+  versioning and deprecation signaling, and rate-limit/plan gating. Codex is a
+  read/query API, so there is no idempotency-key mechanism (queries are naturally
+  idempotent; the small set of mutations manage API tokens).
+base_url: https://graph.codex.io/graphql
+websocket_url: wss://graph.codex.io/graphql
+api_style: GraphQL over HTTPS (POST for queries/mutations); subscriptions over graphql-ws WebSocket
+
+authentication:
+  scheme: API key in Authorization header (no Bearer); short-lived JWT (Bearer); MPP HTTP 402 keyless
+  detail: authentication/defined-authentication.yml
+  docs: https://docs.codex.io/concepts/authentication.md
+
+network_dimension:
+  required: true
+  field: networkId
+  detail: >-
+    Most token/pair queries require a networkId because a token address alone is
+    ambiguous across chains. Common ids — Ethereum 1, BNB Chain 56, Solana
+    1399811149. Enumerate with the getNetworks / filterNetworks queries.
+  docs: https://docs.codex.io/networks.md
+
+batching:
+  supported: true
+  detail: >-
+    Array-accepting endpoints (e.g. getTokenPrices, tokens) fetch many tokens in
+    one request; batch instead of looping for lower cost and latency.
+
+idempotency:
+  supported: false
+  detail: >-
+    Codex is predominantly a read API; queries are inherently idempotent and no
+    Idempotency-Key header is documented. The few mutations manage API tokens.
+
+subscriptions:
+  supported: true
+  transport: graphql-ws WebSocket at wss://graph.codex.io/graphql
+  detail: >-
+    Real-time streams such as onBarsUpdated, onEventsCreated, onFilterTokensUpdated
+    and onLaunchpadTokenEvent. Commitment levels (Preprocessed/Processed/Confirmed,
+    plus Base Flashblocks) trade latency for finality.
+  detail_ref: asyncapi/defined-webhooks.yml
+
+webhooks:
+  supported: true
+  detail: HTTP webhooks are available on the Growth plan and above.
+  detail_ref: asyncapi/defined-webhooks.yml
+
+versioning:
+  scheme: continuous (single evolving GraphQL schema, additive-first)
+  detail: >-
+    New fields, types, queries and networks are added continuously and announced
+    in the dated changelog; breaking removals are pre-announced with a removal
+    date (see deprecation).
+  detail_ref: changelog/defined-changelog.yml
+
+deprecation:
+  mechanism: field/type deprecation announced in the changelog with a removal date
+  detail: >-
+    Deprecated fields (e.g. statsYear1, uniqueTokens1y, PAYOUT_REDEMPTION) are
+    flagged in the changelog and scheduled for removal on a stated date.
+  detail_ref: lifecycle/defined-lifecycle.yml
+
+errors:
+  detail: >-
+    GraphQL-standard errors[] array in the response body; auth failures surface
+    as HTTP 401. No RFC 9457 problem+json envelope (GraphQL transport).
+
+rate_limits:
+  signaled_by: plan-based request-per-second and monthly request quotas
+  detail: >-
+    Free 5 req/s and 10k req/month; Growth 300 req/s and 1M req/month (scalable to
+    10M); Enterprise custom. See Pricing.
+  docs: https://www.codex.io/pricing
