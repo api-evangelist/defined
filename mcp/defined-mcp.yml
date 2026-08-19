@@ -2,14 +2,11 @@ generated: '2026-07-18'
 method: searched
 status: published
 source: https://docs.codex.io/agents/docs-mcp.md
-description: >-
-  Codex (Defined's developer API) operates an official remote, hosted MCP server
-  that lets AI coding tools search and reference the Codex GraphQL API
-  documentation — queries, subscriptions, types and guides — to author and
-  validate GraphQL queries without leaving the editor. It is a documentation MCP;
-  it does not execute API calls (that requires the GraphQL endpoint or SDK with
-  an API key). Install string and server URL captured verbatim from the Codex
-  docs.
+description: Codex (Defined's developer API) operates an official remote, hosted MCP server that lets
+  AI coding tools search and reference the Codex GraphQL API documentation — queries, subscriptions, types
+  and guides — to author and validate GraphQL queries without leaving the editor. It is a documentation
+  MCP; it does not execute API calls (that requires the GraphQL endpoint or SDK with an API key). Install
+  string and server URL captured verbatim from the Codex docs.
 server:
   name: codex-docs
   transport: http
@@ -22,10 +19,15 @@ install:
   windsurf: Edit ~/.codeium/windsurf/mcp_config.json
   claude_desktop: Settings > Connectors > Add custom connector
 tools:
-  - name: documentation-search
-    description: >-
-      Search the Codex API documentation for queries, subscriptions, types and
-      guides to help assistants write correct GraphQL queries.
+- name: documentation-search
+  description: Search the Codex API documentation for queries, subscriptions, types and guides to help
+    assistants write correct GraphQL queries.
 related:
   agent_skill: skills/_index.yml
   llms_txt: llms/defined-llms.txt
+deployment:
+  mode: remote
+  verified: searched
+  tools: 1
+  checked: '2026-08-12'
+  source: catalog MCP census
