@@ -44,6 +44,16 @@ tags:
 - GraphQL
 - Web3
 - Prediction Markets
+tags_raw:
+- Company
+- Cryptocurrency
+- Blockchain
+- DeFi
+- Market Data
+- Trading
+- GraphQL
+- Web3
+- Prediction Markets
 - API
 apis:
 - aid: defined:codex-graphql-api
